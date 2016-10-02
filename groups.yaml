@@ -1,0 +1,6 @@
+#default_view:
+#    view: yes
+#    entities:
+#      - group.weather
+
+weather: sensor.icon, sensor.hourly_summary, sensor.daily_summary, sensor.temperature_max, sensor.temperature_min

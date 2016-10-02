@@ -1,0 +1,11 @@
+secrets.yaml
+
+.HA_VERSION
+.cache
+hass-daemon
+homeassistant-conf
+
+*.log
+*.pid
+*.db
+deps

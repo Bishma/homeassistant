@@ -1,0 +1,260 @@
+homeassistant:
+  name: Yggdresil
+  latitude: !secret me_lat
+  longitude: !secret me_long
+  elevation: 430
+  unit_system: imperial
+  time_zone: America/Los_Angeles
+  customize:
+    sensor.forecastio_summary:
+      friendly_name: Summary
+    sensor.forecastio_precip_type:
+      friendly_name: Precip. Type
+    sensor.forecastio_precip_intensity:
+      friendly_name: Precip. Intensity
+    sensor.forecastio_precip_probability:
+      friendly_name: Chance of Precip.
+    sensor.forecastio_temperature:
+      friendly_name: Temperature
+    sensor.forecastio_apparent_temperature:
+      friendly_name: Feels Like
+    sensor.forecastio_wind_speed:
+      friendly_name: Wind Speed
+    sensor.forecastio_cloud_cover:
+      friendly_name: Cloud Cover
+    sensor.forecastio_humidity:
+      friendly_name: Humidity
+    sensor.forecastio_visibility:
+      friendly_name: Visibility
+    sensor.forecastio_daily_high_temperature:
+      friendly_name: Max. Temp.
+    sensor.forecastio_daily_low_temperature:
+      friendly_name: Min. Temp.
+    sensor.fastcom_download:
+      friendly_name: Connection Speed
+      icon: mdi:cloud-check
+    sensor.nzbget_queue_size:
+      friendly_name: Download Queue
+      icon: mdi:folder-download
+    sensor.nzbget_download_paused:
+      friendly_name: Downloads Paused
+      icon: mdi:pause-octagon
+    sensor.nzbget_disk_free:
+      friendly_name: Free Disk Space
+      icon: mdi:harddisk
+    sensor.nzbget_speed:
+      friendly_name: Current Download Speed
+      icon: mdi:folder-move
+
+# Enables the frontend
+frontend:
+
+http:
+  # api_password: PASSWORD
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+  platform: forecast
+  api_key: !secret forcastio_api
+  monitored_conditions:
+    - summary
+    - icon
+    # nearest_storm_distance
+    # nearest_storm_bearing
+    - precip_type
+    - precip_intensity
+    - precip_probability
+    - temperature
+    - apparent_temperature
+    # dew_point
+    - wind_speed
+    # wind_bearing
+    - cloud_cover
+    - humidity
+    # pressure
+    - visibility
+    # ozone
+    # minutely_summary
+    # hourly_summary
+    # daily_summary
+    - temperature_max
+    - temperature_min
+    # apparent_temperature_max
+    # apparent_temperature_min
+    # precip_intensity_max
+
+# Internet
+sensor 2:
+  platform: fastdotcom
+  minute:
+    - 0
+    - 30
+
+# Travel Times
+sensor 3:
+  platform: google_travel_time
+  name: Home to IDX
+  origin: zone.home
+  destination: zone.idx
+  api_key: !secret google_api
+sensor 4:
+  platform: google_travel_time
+  name: Home to Bend
+  origin: zone.home
+  destination: zone.bend
+  api_key: !secret google_api
+sensor 5:
+  platform: google_travel_time
+  name: Home to Florence
+  origin: zone.home
+  destination: zone.florence
+  api_key: !secret google_api
+sensor 6:
+  platform: google_travel_time
+  name: Home to Portland
+  origin: zone.home
+  destination: zone.portland
+  api_key: !secret google_api
+
+# NZB Get
+sensor 7:
+  platform: nzbget
+  host: 192.168.131.2
+  port: 6789
+# username: apiuser
+# password: apipass
+  monitored_variables:
+    - average_download_rate
+    - download_rate
+    - download_paused
+    - free_disk_space
+    - remaining_size
+    - uptime
+
+# Kodi
+media_player:
+  platform: kodi
+  host: http://192.168.131.3
+  port: 9090
+  name: BiFrost
+#  user: USERNAME
+#  password: PASSWORD
+#  turn_off_action: shutdown
+
+# Zones
+zone 1:
+  name: Home
+  latitude: !secret me_lat
+  longitude: !secret me_long
+  radius: 40
+  icon: mdi:home
+zone 2:
+  name: IDX
+  latitude: 44.0497156
+  longitude: -123.0910567
+  radius: 40
+  icon: mdi:briefcase
+zone 3:
+  name: Bend
+  latitude: 44.0582
+  longitude: -121.3153
+  radius: 40
+  icon: mdi:car
+zone 4:
+  name: Florence
+  latitude: 43.9826
+  longitude: -124.0998
+  radius: 40
+  icon: mdi:anchor
+zone 5:
+  name: Portland
+  latitude: 45.5231
+  longitude: -122.6765
+  radius: 40
+  icon: mdi:emoticon-poop
+
+camera:
+  platform: generic
+  still_image_url: http://192.168.131.98/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MCSPzrLvnhitA.2FvjTZyvJCE19hGw&dsess_sn=1jfiegbpz61xq&dtoken=p0_xxxxxxxxxx
+  name: Garage Cam
+
+switch:
+  platform: tplink
+  host: 192.168.131.97
+  name: Bedroom Lamp
+ 
+# Groups (setting up display)
+group:
+  # views - that are groups I guess
+  default_view:
+    view: yes
+    entities:
+      - camera.garage_cam
+      - media_player.bifrost
+      - group.weather
+      - group.internet
+      - group.travel_times
+      - group.bedroom
+  bedroom_view:
+    view: yes
+    name: Bedroom
+    entities:
+      - group.bedroom_lamps
+  # groups - actual groups
+  weather:
+    name: Weather
+    entities:
+      - sensor.forecastio_summary
+      - sensor.forecastio_precip_type
+      - sensor.forecastio_precip_intensity
+      - sensor.forecastio_precip_probability
+      - sensor.forecastio_temperature
+      - sensor.forecastio_apparent_temperature
+      - sensor.forecastio_wind_speed
+      - sensor.forecastio_cloud_cover
+      - sensor.forecastio_humidity
+      - sensor.forecastio_visibility
+      - sensor.forecastio_daily_high_temperature
+      - sensor.forecastio_daily_low_temperature
+      - sun.sun
+  bedroom:
+    name: Bedroom
+    entities:
+      - switch.bedroom_lamp
+  bedroom_lamps:
+    name: Lamps
+    entities:
+      - switch.bedroom_lamp
+  internet:
+    name: Internet
+    entities:
+      - sensor.fastcom_download
+      - sensor.nzbget_queue_size
+      - sensor.nzbget_download_paused
+      - sensor.nzbget_disk_free
+      - sensor.nzbget_speed
+  travel_times:
+    name: Travel Times
+    entities:
+      - sensor.home_to_idx
+      - sensor.home_to_bend
+      - sensor.home_to_florence
+      - sensor.home_to_portland

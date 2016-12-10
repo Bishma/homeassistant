@@ -1,5 +1,7 @@
 secrets.yaml
 
+.uuid
+
 .HA_VERSION
 .cache
 hass-daemon

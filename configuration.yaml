@@ -6,29 +6,29 @@ homeassistant:
   unit_system: imperial
   time_zone: America/Los_Angeles
   customize:
-    sensor.forecastio_summary:
+    sensor.dark_sky_summary:
       friendly_name: Summary
-    sensor.forecastio_precip_type:
+    sensor.dark_sky_precip_type:
       friendly_name: Precip. Type
-    sensor.forecastio_precip_intensity:
+    sensor.dark_sky_precip_intensity:
       friendly_name: Precip. Intensity
-    sensor.forecastio_precip_probability:
+    sensor.dark_sky_precip_probability:
       friendly_name: Chance of Precip.
-    sensor.forecastio_temperature:
+    sensor.dark_sky_temperature:
       friendly_name: Temperature
-    sensor.forecastio_apparent_temperature:
+    sensor.dark_sky_apparent_temperature:
       friendly_name: Feels Like
-    sensor.forecastio_wind_speed:
+    sensor.dark_sky_wind_speed:
       friendly_name: Wind Speed
-    sensor.forecastio_cloud_cover:
+    sensor.dark_sky_cloud_cover:
       friendly_name: Cloud Cover
-    sensor.forecastio_humidity:
+    sensor.dark_sky_humidity:
       friendly_name: Humidity
-    sensor.forecastio_visibility:
+    sensor.dark_sky_visibility:
       friendly_name: Visibility
-    sensor.forecastio_daily_high_temperature:
+    sensor.dark_sky_daily_high_temperature:
       friendly_name: Max. Temp.
-    sensor.forecastio_daily_low_temperature:
+    sensor.dark_sky_daily_low_temperature:
       friendly_name: Min. Temp.
     sensor.fastcom_download:
       friendly_name: Connection Speed
@@ -45,6 +45,37 @@ homeassistant:
     sensor.nzbget_speed:
       friendly_name: Current Download Speed
       icon: mdi:folder-move
+
+#automation:
+#  - alias: 'Dusk on'
+#    trigger:
+#      platform: sun
+#      event: sunset
+#      offset: "-00:25:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.general_purpose_outlet 
+#  - alias: 'auto off at bedtime'
+#    trigger:
+#      platform: time
+#      after: "21:35:00"
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.general_purpose_outlet 
+#  - alias: 'bedroom trickery on'
+#    trigger:
+#      platform: time
+#      after: "21:30:00"
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.bedroom_lamp
+#  - alias: 'bedroom trickery off'
+#    trigger:
+#      platform: time
+#      after: "22:00:00"
+#    action:
+#      service: switch.turn_off
+#      entity_id: switch.bedroom_lamp
 
 # Enables the frontend
 frontend:
@@ -72,34 +103,22 @@ sun:
 
 # Weather Prediction
 sensor:
-  platform: forecast
+  platform: darksky
   api_key: !secret forcastio_api
   monitored_conditions:
     - summary
     - icon
-    # nearest_storm_distance
-    # nearest_storm_bearing
     - precip_type
     - precip_intensity
     - precip_probability
     - temperature
     - apparent_temperature
-    # dew_point
     - wind_speed
-    # wind_bearing
     - cloud_cover
     - humidity
-    # pressure
     - visibility
-    # ozone
-    # minutely_summary
-    # hourly_summary
-    # daily_summary
     - temperature_max
     - temperature_min
-    # apparent_temperature_max
-    # apparent_temperature_min
-    # precip_intensity_max
 
 # Internet
 sensor 2:
@@ -149,15 +168,24 @@ sensor 7:
     - remaining_size
     - uptime
 
-# Kodi
-media_player:
-  platform: kodi
-  host: http://192.168.131.3
-  port: 9090
-  name: BiFrost
-#  user: USERNAME
-#  password: PASSWORD
-#  turn_off_action: shutdown
+# Synology NAS
+sensor 8:
+  platform: synologydsm
+  host: 192.168.131.2
+  port: 5000
+  username: !secret nas_user
+  password: !secret nas_passwd
+  monitored_conditions:
+    - cpu_total_load
+    - network_up
+    - network_down
+    - disk_smart_status
+    - disk_status
+    - disk_temp
+    - volume_status
+    - volume_size_total
+    - volume_percentage_used
+    - volume_disk_temp_avg
 
 # Zones
 zone 1:
@@ -191,15 +219,20 @@ zone 5:
   radius: 40
   icon: mdi:emoticon-poop
 
-camera:
-  platform: generic
-  still_image_url: http://192.168.131.98/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MCSPzrLvnhitA.2FvjTZyvJCE19hGw&dsess_sn=1jfiegbpz61xq&dtoken=p0_xxxxxxxxxx
-  name: Garage Cam
+#camera:
+#  platform: generic
+#  still_image_url: http://192.168.131.98/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MCSPzrLvnhitA.2FvjTZyvJCE19hGw&dsess_sn=1jfiegbpz61xq&dtoken=p0_xxxxxxxxxx
+#  name: Garage Cam
 
 switch:
   platform: tplink
   host: 192.168.131.97
   name: Bedroom Lamp
+
+switch 2:
+  platform: tplink
+  host: 192.168.131.96
+  name: General Purpose Outlet
  
 # Groups (setting up display)
 group:
@@ -207,33 +240,37 @@ group:
   default_view:
     view: yes
     entities:
-      - camera.garage_cam
-      - media_player.bifrost
+#      - camera.garage_cam
       - group.weather
-      - group.internet
-      - group.travel_times
       - group.bedroom
+      - group.travel_times
+      - group.misc
   bedroom_view:
     view: yes
     name: Bedroom
     entities:
       - group.bedroom_lamps
+  network_view:
+    view: yes
+    name: Network
+    entities:
+      - group.internet
   # groups - actual groups
   weather:
     name: Weather
     entities:
-      - sensor.forecastio_summary
-      - sensor.forecastio_precip_type
-      - sensor.forecastio_precip_intensity
-      - sensor.forecastio_precip_probability
-      - sensor.forecastio_temperature
-      - sensor.forecastio_apparent_temperature
-      - sensor.forecastio_wind_speed
-      - sensor.forecastio_cloud_cover
-      - sensor.forecastio_humidity
-      - sensor.forecastio_visibility
-      - sensor.forecastio_daily_high_temperature
-      - sensor.forecastio_daily_low_temperature
+      - sensor.dark_sky_summary
+      - sensor.dark_sky_precip_type
+      - sensor.dark_sky_precip_intensity
+      - sensor.dark_sky_precip_probability
+      - sensor.dark_sky_temperature
+      - sensor.dark_sky_apparent_temperature
+      - sensor.dark_sky_wind_speed
+      - sensor.dark_sky_cloud_cover
+      - sensor.dark_sky_humidity
+      - sensor.dark_sky_visibility
+      - sensor.dark_sky_daily_high_temperature
+      - sensor.dark_sky_daily_low_temperature
       - sun.sun
   bedroom:
     name: Bedroom
@@ -243,6 +280,10 @@ group:
     name: Lamps
     entities:
       - switch.bedroom_lamp
+  misc:
+    name: Misc
+    entities:
+      - switch.general_purpose_outlet
   internet:
     name: Internet
     entities:

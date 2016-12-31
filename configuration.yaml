@@ -45,6 +45,9 @@ homeassistant:
     sensor.nzbget_speed:
       friendly_name: Current Download Speed
       icon: mdi:folder-move
+    device_tracker.androidaa0fbb6da5bf675clan:
+      friendly_name: Derek
+      icon: mdi:human-male
 
 automation:
 #  - alias: 'Dusk on'
@@ -100,6 +103,11 @@ logbook:
 
 # Track the sun
 sun:
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.131.50
+    home_interval: 10
 
 #zwave:
 #  usb_path: /dev/ttyACM0
@@ -253,6 +261,7 @@ group:
       - group.weather
       - group.travel_times
       - group.outlets
+      - group.family_status
   bedroom_view:
     view: yes
     name: Bedroom
@@ -328,3 +337,7 @@ group:
       - sensor.home_to_bend
       - sensor.home_to_florence
       - sensor.home_to_portland
+  family_status:
+    name: Family Status
+    entities:
+      - device_tracker.androidaa0fbb6da5bf675clan

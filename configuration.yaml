@@ -46,7 +46,7 @@ homeassistant:
       friendly_name: Current Download Speed
       icon: mdi:folder-move
 
-#automation:
+automation:
 #  - alias: 'Dusk on'
 #    trigger:
 #      platform: sun
@@ -62,13 +62,13 @@ homeassistant:
 #    action:
 #      service: switch.turn_off
 #      entity_id: switch.general_purpose_outlet 
-#  - alias: 'bedroom trickery on'
-#    trigger:
-#      platform: time
-#      after: "21:30:00"
-#    action:
-#      service: switch.turn_on
-#      entity_id: switch.bedroom_lamp
+  - alias: 'bedroom trickery on'
+    trigger:
+      platform: time
+      after: "21:45:00"
+    action:
+      service: switch.turn_on
+      entity_id: switch.bedroom_lamp
 #  - alias: 'bedroom trickery off'
 #    trigger:
 #      platform: time
@@ -100,6 +100,10 @@ logbook:
 
 # Track the sun
 sun:
+
+#zwave:
+#  usb_path: /dev/ttyACM0
+#  config_path: /usr/local/lib/python3.4/dist-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
 
 # Weather Prediction
 sensor:
@@ -169,23 +173,23 @@ sensor 7:
     - uptime
 
 # Synology NAS
-sensor 8:
-  platform: synologydsm
-  host: 192.168.131.2
-  port: 5000
-  username: !secret nas_user
-  password: !secret nas_passwd
-  monitored_conditions:
-    - cpu_total_load
-    - network_up
-    - network_down
-    - disk_smart_status
-    - disk_status
-    - disk_temp
-    - volume_status
-    - volume_size_total
-    - volume_percentage_used
-    - volume_disk_temp_avg
+#sensor 8:
+#  platform: synologydsm
+#  host: 192.168.131.2
+#  port: 5000
+#  username: !secret nas_user
+#  password: !secret nas_passwd
+#  monitored_conditions:
+#    - cpu_total_load
+#    - network_up
+#    - network_down
+#    - disk_smart_status
+#    - disk_status
+#    - disk_temp
+#    - volume_status
+#    - volume_size_total
+#    - volume_percentage_used
+#    - volume_disk_temp_avg
 
 # Zones
 zone 1:

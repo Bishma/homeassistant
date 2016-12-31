@@ -54,14 +54,14 @@ automation:
 #      offset: "-00:25:00"
 #    action:
 #      service: switch.turn_on
-#      entity_id: switch.general_purpose_outlet 
+#      entity_id: switch.the_sparkle 
 #  - alias: 'auto off at bedtime'
 #    trigger:
 #      platform: time
 #      after: "21:35:00"
 #    action:
 #      service: switch.turn_off
-#      entity_id: switch.general_purpose_outlet 
+#      entity_id: switch.the_sparkle 
   - alias: 'bedroom trickery on'
     trigger:
       platform: time
@@ -173,23 +173,23 @@ sensor 7:
     - uptime
 
 # Synology NAS
-#sensor 8:
-#  platform: synologydsm
-#  host: 192.168.131.2
-#  port: 5000
-#  username: !secret nas_user
-#  password: !secret nas_passwd
-#  monitored_conditions:
-#    - cpu_total_load
-#    - network_up
-#    - network_down
-#    - disk_smart_status
-#    - disk_status
-#    - disk_temp
-#    - volume_status
-#    - volume_size_total
-#    - volume_percentage_used
-#    - volume_disk_temp_avg
+sensor 8:
+  platform: synologydsm
+  host: 192.168.131.2
+  port: 5000
+  username: !secret nas_user
+  password: !secret nas_passwd
+  monitored_conditions:
+    - cpu_total_load
+    - network_up
+    - network_down
+    - disk_smart_status
+    - disk_status
+    - disk_temp
+    - volume_status
+    - volume_size_total
+    - volume_percentage_used
+    - volume_disk_temp_avg
 
 # Zones
 zone 1:
@@ -236,7 +236,12 @@ switch:
 switch 2:
   platform: tplink
   host: 192.168.131.96
-  name: General Purpose Outlet
+  name: The Sparkle
+
+media_player:
+  - platform: kodi
+    host: http://192.168.131.3
+    port: 9090
  
 # Groups (setting up display)
 group:
@@ -246,19 +251,25 @@ group:
     entities:
 #      - camera.garage_cam
       - group.weather
-      - group.bedroom
       - group.travel_times
-      - group.misc
+      - group.outlets
   bedroom_view:
     view: yes
     name: Bedroom
     entities:
       - group.bedroom_lamps
+  livingroom_view:
+    view: yes
+    name: Living Room
+    entities:
+      - media_player.kodi
+      - group.misc
   network_view:
     view: yes
     name: Network
     entities:
       - group.internet
+      - group.nas
   # groups - actual groups
   weather:
     name: Weather
@@ -287,7 +298,12 @@ group:
   misc:
     name: Misc
     entities:
-      - switch.general_purpose_outlet
+      - switch.the_sparkle
+  outlets:
+    name: Outlets
+    entities:
+      - switch.bedroom_lamp
+      - switch.the_sparkle
   internet:
     name: Internet
     entities:
@@ -296,6 +312,15 @@ group:
       - sensor.nzbget_download_paused
       - sensor.nzbget_disk_free
       - sensor.nzbget_speed
+  nas:
+    name: NAS
+    entities:
+      - sensor.average_disk_temp_volume_1
+      - sensor.cpu_load_total
+      - sensor.network_down
+      - sensor.network_up
+      - sensor.status_volume_1
+      - sensor.volume_used_volume_1
   travel_times:
     name: Travel Times
     entities:

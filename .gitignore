@@ -8,6 +8,10 @@ hass-daemon
 homeassistant-conf
 known_devices.yaml
 
+OZW_Log.txt
+pyozw.sqlite
+zw*.xml
+
 *.log
 *.pid
 *.db

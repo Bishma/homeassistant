@@ -1,0 +1,77 @@
+# Weather Prediction
+  - platform: darksky
+    api_key: !secret forcastio_api
+    monitored_conditions:
+      - summary
+      - icon
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - wind_speed
+      - cloud_cover
+      - humidity
+      - visibility
+      - temperature_max
+      - temperature_min
+
+# Internet
+  - platform: fastdotcom
+    minute:
+      - 0
+      - 30
+
+# Travel Times
+  - platform: google_travel_time
+    name: Home to IDX
+    origin: zone.home
+    destination: zone.idx
+    api_key: !secret google_api
+  - platform: google_travel_time
+    name: Home to Bend
+    origin: zone.home
+    destination: zone.bend
+    api_key: !secret google_api
+  - platform: google_travel_time
+    name: Home to Florence
+    origin: zone.home
+    destination: zone.florence
+    api_key: !secret google_api
+  - platform: google_travel_time
+    name: Home to Portland
+    origin: zone.home
+    destination: zone.portland
+    api_key: !secret google_api
+
+# NZB Get
+  - platform: nzbget
+    host: 192.168.131.2
+    port: 6789
+#   username: apiuser
+#   password: apipass
+    monitored_variables:
+      - average_download_rate
+      - download_rate
+      - download_paused
+      - free_disk_space
+      - remaining_size
+      - uptime
+
+# Synology NAS
+  - platform: synologydsm
+    host: 192.168.131.2
+    port: 5000
+    username: !secret nas_user
+    password: !secret nas_passwd
+    monitored_conditions:
+      - cpu_total_load
+      - network_up
+      - network_down
+      - disk_smart_status
+      - disk_status
+      - disk_temp
+      - volume_status
+      - volume_size_total
+      - volume_percentage_used
+      - volume_disk_temp_avg

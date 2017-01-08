@@ -1,0 +1,6 @@
+  - platform: tplink
+    host: 192.168.131.97
+    name: Bedroom Lamp
+  - platform: tplink
+    host: 192.168.131.96
+    name: The Sparkle

@@ -1,0 +1,3 @@
+  - platform: kodi
+    host: http://192.168.131.3
+    port: 9090

@@ -1,0 +1,48 @@
+# weather
+    sensor.dark_sky_summary:
+      friendly_name: Summary
+    sensor.dark_sky_precip_type:
+      friendly_name: Precip. Type
+    sensor.dark_sky_precip_intensity:
+      friendly_name: Precip. Intensity
+    sensor.dark_sky_precip_probability:
+      friendly_name: Chance of Precip.
+    sensor.dark_sky_temperature:
+      friendly_name: Temperature
+    sensor.dark_sky_apparent_temperature:
+      friendly_name: Feels Like
+    sensor.dark_sky_wind_speed:
+      friendly_name: Wind Speed
+    sensor.dark_sky_cloud_cover:
+      friendly_name: Cloud Cover
+    sensor.dark_sky_humidity:
+      friendly_name: Humidity
+    sensor.dark_sky_visibility:
+      friendly_name: Visibility
+    sensor.dark_sky_daily_high_temperature:
+      friendly_name: Max. Temp.
+    sensor.dark_sky_daily_low_temperature:
+      friendly_name: Min. Temp.
+
+# network
+    sensor.fastcom_download:
+      friendly_name: Connection Speed
+      icon: mdi:cloud-check
+    sensor.nzbget_queue_size:
+      friendly_name: Download Queue
+      icon: mdi:folder-download
+    sensor.nzbget_download_paused:
+      friendly_name: Downloads Paused
+      icon: mdi:pause-octagon
+    sensor.nzbget_disk_free:
+      friendly_name: Free Disk Space
+      icon: mdi:harddisk
+    sensor.nzbget_speed:
+      friendly_name: Current Download Speed
+      icon: mdi:folder-move
+
+# location
+    device_tracker.androidaa0fbb6da5bf675clan:
+      friendly_name: Derek
+      icon: mdi:human-male
+

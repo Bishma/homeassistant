@@ -84,7 +84,9 @@ automation:
 frontend:
 
 http:
-  # api_password: PASSWORD
+  api_password: !secret hass_password
+  ssl_certificate: !secret ssl_cert
+  ssl_key: !secret ssl_key
 
 # Checks for available updates
 updater:
@@ -105,9 +107,7 @@ logbook:
 sun:
 
 device_tracker:
-  - platform: nmap_tracker
-    hosts: 192.168.131.50
-    home_interval: 10
+  - platform: locative
 
 #zwave:
 #  usb_path: /dev/ttyACM0

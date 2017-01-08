@@ -6,6 +6,7 @@ secrets.yaml
 .cache
 hass-daemon
 homeassistant-conf
+known_devices.yaml
 
 *.log
 *.pid

@@ -1,3 +1,3 @@
   - platform: generic
-    still_image_url: http://192.168.131.98/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MEE3HHpzIu3lrua9eXevGS5CHZphBQ&sess_sn=1jfiegbpz61xq&dtoken=p0_xxxxxxxxxx
+    still_image_url: http://192.168.131.98/ccm/ccm_pic_get.jpg?hfrom_handle=887330&dsess=1&dsess_nid=MCBrlRlKNM4RjVisvI709HRCJe9hAg&dsess_sn=1jfiegbpz61xq&dtoken=p0_xxxxxxxxxx
     name: Garage Cam

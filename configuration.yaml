@@ -23,9 +23,9 @@ http:
 # making my house a robot
 automation: !include configuration.d/automation.yaml
 
-zwave:
-  usb_path: /dev/ttyACM0
-  config_path: /srv/homeassistant/homeassistant_venv/lib/python3.4/site-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config/
+# thermostat
+ecobee:
+  api_key: !secret ecobee_api
 
 # Enables the frontend
 frontend:
@@ -49,7 +49,7 @@ logbook:
 sun:
 
 device_tracker:
-  - platform: locative
+  - platform: gpslogger
 
 # Sensors
 sensor: !include configuration.d/sensors.yaml

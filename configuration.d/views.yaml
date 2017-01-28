@@ -9,6 +9,7 @@
       - group.travel_times
       - group.outlets
       - group.family_status
+      - configurator.ecobee
   bedroom_view:
     view: yes
     name: Bedroom
@@ -88,5 +89,5 @@
   family_status:
     name: Family Status
     entities:
-      - device_tracker.androidaa0fbb6da5bf675clan
+      - device_tracker.ht6a60207972
 

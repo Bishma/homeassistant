@@ -9,22 +9,20 @@
 #  - alias: 'auto off at bedtime'
 #    trigger:
 #      platform: time
-#      after: "21:35:00"
+#      after: "22:10:00"
 #    action:
 #      service: switch.turn_off
 #      entity_id: switch.the_sparkle 
-  - alias: 'bedroom trickery on'
     trigger:
       platform: time
-      after: "21:45:00"
+      after: "18:04:00"
     action:
       service: switch.turn_on
       entity_id: switch.bedroom_lamp
 #  - alias: 'bedroom trickery off'
-#    trigger:
-#      platform: time
-#      after: "22:00:00"
+    trigger:
+      platform: time
+      after: "22:30:00"
 #    action:
 #      service: switch.turn_off
 #      entity_id: switch.bedroom_lamp
-

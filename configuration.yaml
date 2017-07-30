@@ -10,8 +10,8 @@ homeassistant:
 # password and certs
 http:
   api_password: !secret hass_password
-  ssl_certificate: !secret ssl_cert
-  ssl_key: !secret ssl_key
+#  ssl_certificate: !secret ssl_cert
+#  ssl_key: !secret ssl_key
   trusted_networks:
     - 127.0.0.1
     - ::1
@@ -21,7 +21,17 @@ http:
   login_attempts_threshold: 5
 
 # making my house a robot
-automation: !include configuration.d/automation.yaml
+automation:
+  trigger:
+    platform: time
+    after: "21:30:00"
+  action:
+    service: switch.turn_on
+    entity_id: switch.bedroom_lamp
+
+# alexa
+emulated_hue:
+  type: alexa
 
 # thermostat
 ecobee:
@@ -48,8 +58,15 @@ logbook:
 # Track the sun
 sun:
 
-device_tracker:
-  - platform: gpslogger
+#device_tracker:
+#  - platform: gpslogger
+
+# Netatmo
+netatmo:
+  api_key: !secret netatmo_key
+  secret_key: !secret netatmo_secret
+  username: !secret netatmo_user
+  password: !secret netatmo_passwd
 
 # Sensors
 sensor: !include configuration.d/sensors.yaml
